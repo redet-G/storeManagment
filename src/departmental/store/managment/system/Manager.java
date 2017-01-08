@@ -62,6 +62,9 @@ public class Manager {
                         // list all the cases here
                         case 0:
                              return 1;
+                        case 1:
+                            register();
+                            return 1;
                         case 6:
                             int selRep = reportMenu();
                             switch(selRep){
@@ -72,6 +75,7 @@ public class Manager {
                             }
                     }
                 }
+                 break;
             case 2:
                 help();
                 return 1;
@@ -185,7 +189,22 @@ public class Manager {
         }
     }
     public void register(){
-            //register a pakcage here
+        //register a pakcage here
+        boolean isCont;
+        do{
+            isCont=false;
+            UoGStore.enterPackage();
+            if(DEFAULT_UI==userInterface.GRAPHICAL){
+               if(0==JOptionPane.showConfirmDialog(null,"do you want to continue registering?","registering",JOptionPane.YES_NO_OPTION)){
+                  isCont=true;
+               }                
+            }else{
+                Scanner in=new Scanner(System.in);
+                System.out.println("do you want to continue registering? (Y/n)");
+                String isTrue = in.next();
+                isCont=isTrue.equalsIgnoreCase("Y");
+            }
+        }while(isCont);
     }
     
 }
