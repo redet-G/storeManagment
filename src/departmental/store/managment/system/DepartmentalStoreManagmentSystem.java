@@ -9,8 +9,6 @@ import static departmental.store.managment.system.GUI.DEFAULT_UI;
 import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -99,6 +97,8 @@ public class DepartmentalStoreManagmentSystem {
                     }
                 }
             case 2:
+                help();
+                return 1;
             case 3:
                 about();
                 return 1;           
@@ -150,9 +150,54 @@ public class DepartmentalStoreManagmentSystem {
                         "                  YOHANNES TADESSE(4036/08)      \n" +
                         "                  YOHANNES NIGUSSIE(4033/08)     \n" +
                         "                                                 \n" +
-                        "       (c) Copyright 2016. All Rights Reserved.";
+                        "       (c) Copyright 2017. All Rights Reserved.";
         if(DEFAULT_UI==userInterface.GRAPHICAL){
             JOptionPane.showMessageDialog(null,MESSAGE,"ABOUT",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            System.out.println(MESSAGE);
+            System.out.println("press enter to continue.");
+            try {
+                System.in.read();
+            } catch (IOException ex) {
+                System.out.println("there was an error reading the input.");
+            }
+        }
+    }
+    public static void help(){
+                String MESSAGE = "Departmental store management system is a program          \n" +
+                                "that helps to manage the store of a certain orga-          \n" +
+                                "nization, for example in university of Gondar              \n" +
+                                "there is a big store that other departments use            \n" +
+                                "and depend on in order to function properly. This          \n" +
+                                "program is intended to facilitate the function of          \n" +
+                                "such unit of an organization by providing the              \n" +
+                                "following functions.                                       \n" +
+                                "                                                           \n" +
+                                "-Managing recodes of properties that the store has:-       \n" +
+                                " this has a certain advantage over the paper paced         \n" +
+                                " system. By using this program store manager or any        \n" +
+                                " other employee can instantly access the available         \n" +
+                                " products that the store contain. By doing so not          \n" +
+                                " only this system can save time but also money that        \n" +
+                                " was wasted in the older system.                           \n" +
+                                "                                                           \n" +
+                                "-Managing the issued properties that the store doesn't     \n" +
+                                " have:- this is important in a way that the issued pr-     \n" +
+                                " oducts can be managed easly.                              \n" +
+                                "                                                           \n" +
+                                "-Recoding dispatched properties:- dispatched properties    \n" +
+                                " are products that have been sent to other departments.    \n" +
+                                " this way the store manager knows how it has performed     \n" +
+                                " and how much money the store have served.                 \n" +
+                                "                                                           \n" +
+                                "-Producing and exporting reports to other file formats:-   \n" +
+                                " one of the main feature of this program is its ability    \n" +
+                                " to produce reports. This way one can easily understand    \n" +
+                                " the performance of the store. And this reports can        \n" +
+                                " easily exported to other file formats, like word docu-    \n" +
+                                " ments and spread sheet, for further analysis.";
+        if(DEFAULT_UI==userInterface.GRAPHICAL){
+            JOptionPane.showMessageDialog(null,MESSAGE,"HELP",JOptionPane.INFORMATION_MESSAGE);
         }else{
             System.out.println(MESSAGE);
             System.out.println("press enter to continue.");
