@@ -8,6 +8,7 @@ package departmental.store.managment.system;
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
 import java.awt.HeadlessException;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -31,13 +32,13 @@ public class Manager {
     }
     public static int storeMenu(){
         String menu = " STORE MENU\n" +
-                        "       1)register/import property\n" +
-                        "       2)display property\n" +
-                        "       3)dispatch property\n" +
-                        "       4)issue property\n" +
+                        "       1)register package\n" +
+                        "       2)display packages\n" +
+                        "       3)dispatch packges\n" +
+                        "       4)issue packages\n" +
                         "       5)process and sort the store\n" +
                         "       6)REPORT MENU\n" +
-                        "       7)export property list to other file format\n" +
+                        "       7)export package list to other file format\n" +
                         "       0)back to MAIN MENU\n";
 
         return getInt(menu,"STORE MENU",0,7);    
@@ -65,6 +66,11 @@ public class Manager {
                         case 1:
                             register();
                             return 1;
+                        case 2:
+                            UoGStore.display();
+                            return 1;
+                        case 3:
+                            //dispatch pakage after searching it
                         case 6:
                             int selRep = reportMenu();
                             switch(selRep){
@@ -73,6 +79,7 @@ public class Manager {
                                     return 2;
 
                             }
+                        
                     }
                 }
                  break;
@@ -108,7 +115,13 @@ public class Manager {
         }else{
              System.out.println(prompt);
              Scanner in = new Scanner(System.in);
-             int temp = in.nextInt();
+             int temp;
+             try{
+                temp =in.nextInt();
+             }catch(InputMismatchException e){
+                System.out.println("invalid input try again.");
+                temp =in.nextInt();
+             }
              while(true){
                 if(temp>=startInt&&temp<=endInt){
                     return temp;

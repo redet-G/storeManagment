@@ -6,10 +6,7 @@
 package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
-import java.awt.HeadlessException;
-import java.io.IOException;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
+
 
 /**
  *

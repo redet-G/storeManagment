@@ -85,7 +85,10 @@ public class Package extends GUI implements Comparable {
     
     @Override
     public String toString() {
-        return "| " + code + " | " + amount + " | " + name + " | " + discription + " | " + price + " | " + dispatched + '|';
+        return String.format("%-4s | %-5s | %-10s | %4f | %4d | %4d%n", code, name , discription , price , amount , dispatched);
+    }
+    public Object[] toArray(){
+        return new Object[]{code, name , discription , price , amount , dispatched};
     }
     
     public long getDispatched() {

@@ -5,6 +5,7 @@ import static departmental.store.managment.system.GUI.DEFAULT_UI;
 import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  * store class is the class responsible to manage packages
@@ -89,7 +90,19 @@ public class Store {
         System.out.println(toString());
     }
     public void gShow(){
-        JOptionPane.showMessageDialog(null,toString(),"summery of the store",JOptionPane.INFORMATION_MESSAGE);
+        if(top!=0){
+            String[] columen = {"code", "name ", "discription" , "price" , "amount" , "dispatched"};
+            int row = top+1;
+            Object[][] table = new Object[row][6];
+            table[0]=columen;
+            for(int i=0;i<top;i++){
+                table[i+1]=list[i].toArray();
+            }
+            JTable t = new JTable(table,columen);
+            JOptionPane.showMessageDialog(null,t,"summery of the store",JOptionPane.INFORMATION_MESSAGE);
+        }else{            
+            JOptionPane.showMessageDialog(null,toString(),"summery of the store",JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     @Override
     public String toString(){
@@ -98,9 +111,10 @@ public class Store {
         if(top==0){
               summeryStr +="the store is empty\n";
         }else{
+            summeryStr+=String.format("%-4s | %-5s | %-10s | %-9s | %-4s | %-4s%n","code", "name ", "discription" , "price" , "amount" , "dispatched");
             summeryStr+="-------------------------------------------------------------\n";
             for(int i=0;i<top;i++)
-               summeryStr+=list[i]+"\n";
+               summeryStr+=list[i];
             summeryStr+="-------------------------------------------------------------";
         }
         return summeryStr;
