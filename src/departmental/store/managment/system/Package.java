@@ -17,11 +17,12 @@ import javax.swing.JOptionPane;
 public class Package extends GUI implements Comparable {
     private static int length;
     private String code;
-    private long amount;
+    private long amount=0;
     private String name;
     private String discription;
     private double price;
     private long dispatched=0;
+    private long issued=0;
 
     public Package(String code, String name, long amount, double price, String discription) {
         this.code = code;
@@ -58,13 +59,34 @@ public class Package extends GUI implements Comparable {
     public void setAmount(long amount) {
         this.amount = amount;
     }
-
+    public void addAmount(long amount){
+        if(amount>0){
+            this.amount+=amount;
+            //fulfile the issued items
+            if(issued>0){
+                issued = issued-amount;
+                if(issued<0)
+                    issued=0;
+            }
+        }
+    }
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getIssued() {
+        return issued;
+    }
+
+    public void Issue(long amount) throws ArithmeticException {
+        if(amount > 0)
+           this.issued += amount;
+        else
+            throw new ArithmeticException("invalid number");
     }
 
     public String getDiscription() {
@@ -85,10 +107,10 @@ public class Package extends GUI implements Comparable {
     
     @Override
     public String toString() {
-        return String.format("%-4s | %-5s | %-10s | %4f | %4d | %4d%n", code, name , discription , price , amount , dispatched);
+        return String.format("%-4s | %-5s | %-10s | %4f | %4d | %4d | %4d%n", code, name , discription , price , amount , dispatched, issued);
     }
     public Object[] toArray(){
-        return new Object[]{code, name , discription , price , amount , dispatched};
+        return new Object[]{code, name , discription , price , amount , dispatched, issued};
     }
     
     public long getDispatched() {
@@ -140,13 +162,19 @@ public class Package extends GUI implements Comparable {
             setPrice(Double.parseDouble(temp));
             displayablemsg+=fileds[i]+": "+temp+"\n";
          } catch (HeadlessException | NumberFormatException e) {
-             JOptionPane.showMessageDialog(null,"wrong value for a datatype inserted. try again","error",JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null,"invalid value inserted. please try again","error",JOptionPane.ERROR_MESSAGE);
              gEnter();
         }
     }
     @Override
     public void gShow(){
-        JOptionPane.showMessageDialog(null,this.toString(),"package information",JOptionPane.INFORMATION_MESSAGE);
+                         String info = "code: "+code+"\n"
+                         + "name: " +getName()+"\n"
+                         + "discription: "+getDiscription()+"\n"
+                         + "price: "+getPrice()+"\n"
+                         + "amount: "+getAmount()+"\n"
+                         + "dispatched: "+getDispatched()+"\n";
+        JOptionPane.showMessageDialog(null,info,"package information",JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void tEnter(){
@@ -170,7 +198,13 @@ public class Package extends GUI implements Comparable {
             setPrice(in.nextDouble());
     }
     public void tshow(){
-        System.out.println(toString());
+           String info = "code: "+code+"\n"
+                         + "name: " +getName()+"\n"
+                         + "discription: "+getDiscription()+"\n"
+                         + "price: "+getPrice()+"\n"
+                         + "amount: "+getAmount()+"\n"
+                         + "dispatched: "+getDispatched()+"\n";
+        System.out.println(info);
     }
 
     @Override
@@ -192,7 +226,7 @@ public class Package extends GUI implements Comparable {
             return false;
         }
         final Package other = (Package) obj;
-        if (!Objects.equals(this.code, other.getCode())) {
+        if(!Objects.equals(this.code, other.getCode())) {
             return false;
         }
         return true;

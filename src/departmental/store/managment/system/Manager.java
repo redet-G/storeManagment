@@ -71,6 +71,8 @@ public class Manager {
                             return 1;
                         case 3:
                             //dispatch pakage after searching it
+                             UoGStore.dispatch();
+                             return 1;
                         case 6:
                             int selRep = reportMenu();
                             switch(selRep){
@@ -188,7 +190,7 @@ public class Manager {
                                 " to produce reports. This way one can easily understand    \n" +
                                 " the performance of the store. And this reports can        \n" +
                                 " easily exported to other file formats, like word docu-    \n" +
-                                " ments and spread sheet, for further analysis.";
+                                " ments and spread sheet, for further analysis.\n";
         if(DEFAULT_UI==userInterface.GRAPHICAL){
             JOptionPane.showMessageDialog(null,MESSAGE,"HELP",JOptionPane.INFORMATION_MESSAGE);
         }else{
@@ -219,5 +221,5 @@ public class Manager {
             }
         }while(isCont);
     }
-    
+
 }
