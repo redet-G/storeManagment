@@ -17,6 +17,7 @@ public class Store {
     private final int size=100;
     private Package[] list;
     private String name;
+    public static final String[] FIELDS = {"code","name","discription","amount","price"};
     public Store() {
         top=0;
         this.list = new Package[size];
@@ -79,11 +80,10 @@ public class Store {
     
     public void gEnter(){
         Package newpackage= new Package();
-        String[] fileds = {"code","name","discription","amount","price"};
         int i=0;
         String displayablemsg="insert package infomation \n";       
         try {
-            String temp=JOptionPane.showInputDialog(null,displayablemsg +fileds[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+            String temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
             newpackage.setCode(temp);
             if(isInTheStore(temp)){
             //package is found
@@ -94,9 +94,9 @@ public class Store {
                          + "discription: "+newpackage.getDiscription()+"\n"
                          + "price: "+newpackage.getPrice()+"\n"
                          + "amount: "+newpackage.getAmount()+"\n"
-                         + "dispatched: "+newpackage.getDispatched()+"\n";
-                 
-                 int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of packge to insert."));
+                         + "dispatched: "+newpackage.getDispatched()+"\n"
+                         + "issued: "+newpackage.getIssued();
+                 int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of package to insert."));
                  if(amount>0){
                     newpackage.addAmount(amount);
                     JOptionPane.showMessageDialog(null,"the package has been sucessfully registered");
@@ -105,23 +105,23 @@ public class Store {
                  }
                  
             }else{
-                displayablemsg+=fileds[i]+": "+temp+"\n";
+                displayablemsg+=FIELDS[i]+": "+temp+"\n";
                 i++;
-                temp=JOptionPane.showInputDialog(null,displayablemsg +fileds[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
                 newpackage.setName(temp);
-                displayablemsg+=fileds[i]+": "+temp+"\n";
+                displayablemsg+=FIELDS[i]+": "+temp+"\n";
                 i++;
-                temp=JOptionPane.showInputDialog(null,displayablemsg +fileds[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
                 newpackage.setDiscription(temp);
-                displayablemsg+=fileds[i]+": "+temp+"\n";
+                displayablemsg+=FIELDS[i]+": "+temp+"\n";
                 i++;
-                temp=JOptionPane.showInputDialog(null,displayablemsg +fileds[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
                 newpackage.setAmount(Long.parseLong(temp));
-                displayablemsg+=fileds[i]+": "+temp+"\n";
+                displayablemsg+=FIELDS[i]+": "+temp+"\n";
                 i++;
-                temp=JOptionPane.showInputDialog(null,displayablemsg +fileds[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
                 newpackage.setPrice(Double.parseDouble(temp));
-                displayablemsg+=fileds[i]+": "+temp+"\n";
+                displayablemsg+=FIELDS[i]+": "+temp+"\n";
                 append(newpackage);
             }
          } catch (HeadlessException | NumberFormatException e) {
@@ -132,10 +132,9 @@ public class Store {
     public void tEnter(){
         Package newpackage= new Package();
         Scanner in = new Scanner(System.in);
-        String[] fileds = {"code","name","discription","amount","price"};
         int i=0;
         String displayablemsg="insert package infomation \n";
-        System.out.print(displayablemsg +fileds[i]+"=");
+        System.out.print(displayablemsg +FIELDS[i]+"=");
         String temp = in.next();
         newpackage.setCode(temp);
         if(isInTheStore(temp)){
@@ -147,9 +146,10 @@ public class Store {
                      + "discription: "+newpackage.getDiscription()+"\n"
                      + "price: "+newpackage.getPrice()+"\n"
                      + "amount: "+newpackage.getAmount()+"\n"
-                     + "dispatched: "+newpackage.getDispatched()+"\n";
+                     + "dispatched: "+newpackage.getDispatched()+"\n"
+                     + "issued: "+newpackage.getIssued();
 
-             System.out.println("package found! \n"+packageInfo+"\n insert the amount of packge to insert.");
+             System.out.println("package found! \n"+packageInfo+"\n insert the amount of package to insert.");
              int amount = in.nextInt();
              if(amount>0){
                 newpackage.addAmount(amount);
@@ -159,19 +159,19 @@ public class Store {
              }
         }else{
             i++;
-            System.out.print(displayablemsg +fileds[i]+"=");
+            System.out.print(displayablemsg +FIELDS[i]+"=");
             newpackage.setName(in.next());
             i++;
-            System.out.print(displayablemsg +fileds[i]+"=");
+            System.out.print(displayablemsg +FIELDS[i]+"=");
             newpackage.setDiscription(in.next());
             i++;
-            System.out.print(displayablemsg +fileds[i]+"=");
+            System.out.print(displayablemsg +FIELDS[i]+"=");
             newpackage.setAmount(in.nextLong());
             i++;
-            System.out.print(displayablemsg +fileds[i]+"=");
+            System.out.print(displayablemsg +FIELDS[i]+"=");
             newpackage.setPrice(in.nextDouble());
+            append(newpackage);
         }
-        append(newpackage);
     }
     public void tShow(){
         System.out.println(toString());
@@ -257,7 +257,7 @@ public class Store {
              String prompt = "what package do you went to dispatch?(insert the unique identifer-code)";
              String code = JOptionPane.showInputDialog(null, prompt,"dipatch window",JOptionPane.QUESTION_MESSAGE);
              if(!isInTheStore(code)){
-                 JOptionPane.showMessageDialog(null,"the packge is not found.","error",JOptionPane.ERROR_MESSAGE);
+                 JOptionPane.showMessageDialog(null,"the package is not found.","error",JOptionPane.ERROR_MESSAGE);
              }else{
                  Package dispachable = packageWith(code);
                  String packageInfo = "code: "+code+"\n"
@@ -265,9 +265,9 @@ public class Store {
                          + "discription: "+dispachable.getDiscription()+"\n"
                          + "price: "+dispachable.getPrice()+"\n"
                          + "amount: "+dispachable.getAmount()+"\n"
-                         + "dispatched: "+dispachable.getDispatched()+"\n";
-                 
-                 int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of packge to dispache."));               
+                         + "dispatched: "+dispachable.getDispatched()+"\n"
+                         + "issued: "+dispachable.getIssued();
+                 int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of package to dispache."));               
                  if(amount > dispachable.getAmount())
                  {
                      JOptionPane.showMessageDialog(null,"invalid amount.","ERROR",JOptionPane.ERROR_MESSAGE);
@@ -284,12 +284,12 @@ public class Store {
              System.out.println(prompt);
              String code =  in.next();
              if(!isInTheStore(code)){
-                 System.out.println("the packge is not found.");
+                 System.out.println("the package is not found.");
              }else{
                  System.out.println("package found!");
                  Package dispachable = packageWith(code);
                  dispachable.show();
-                 System.out.println("insert the amount of packge to dispache.");
+                 System.out.println("insert the amount of package to dispache.");
                  int amount = in.nextInt();
                  if(amount > dispachable.getAmount())
                  {
@@ -308,11 +308,94 @@ public class Store {
         return null;
     }
     public void issue(){
-        Package temp = new Package();
+        Package newpackage = new Package();
+        String displayablemsg="insert package infomation \n";
+        int i=0;
         if(DEFAULT_UI!=userInterface.TERMINAL){
-            temp.gEnter();
+            try {
+                String temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                if(isInTheStore(temp)){
+                //package is found
+                   newpackage = packageWith(temp);
+
+                   String packageInfo = "code: "+temp+"\n"
+                             + "name: " +newpackage.getName()+"\n"
+                             + "discription: "+newpackage.getDiscription()+"\n"
+                             + "price: "+newpackage.getPrice()+"\n"
+                             + "amount: "+newpackage.getAmount()+"\n"
+                             + "dispatched: "+newpackage.getDispatched()+"\n"
+                             + "issued: "+newpackage.getIssued();
+
+                     int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of package to issue."));
+                     if(amount>0){
+                        newpackage.Issue(amount);
+                        JOptionPane.showMessageDialog(null,"the package has been sucessfully issued");
+                     }else{
+                         throw new NumberFormatException("invalid amount.");
+                     }
+
+                }else{    
+                    newpackage.setCode(temp);
+                    displayablemsg+=FIELDS[i]+": "+temp+"\n";
+                    i++;
+                    temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                    newpackage.setName(temp);
+                    displayablemsg+=FIELDS[i]+": "+temp+"\n";
+                    i++;
+                    temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                    newpackage.setDiscription(temp);
+                    displayablemsg+=FIELDS[i]+": "+temp+"\n";
+                    i++;
+                    temp=JOptionPane.showInputDialog(null,displayablemsg +"issued "+FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                    newpackage.Issue(Long.parseLong(temp));
+                    displayablemsg+=FIELDS[i]+": "+temp+"\n";
+                    i++;
+                    temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
+                    newpackage.setPrice(Double.parseDouble(temp));
+                    displayablemsg+=FIELDS[i]+": "+temp+"\n";
+                    append(newpackage);
+                }
+             } catch (HeadlessException | NumberFormatException e) {
+                 JOptionPane.showMessageDialog(null,e.getLocalizedMessage()+" please try again","error alert message",JOptionPane.ERROR_MESSAGE);
+                 gEnter();
+            }
         }else{
-            temp.tEnter();
+            Scanner in = new Scanner(System.in);
+            System.out.print(displayablemsg +FIELDS[i]+"=");
+            String temp = in.next();
+            newpackage.setCode(temp);
+            if(isInTheStore(temp)){
+            //package is found
+               newpackage = packageWith(temp);
+               String packageInfo = "code: "+temp+"\n"
+                         + "name: " +newpackage.getName()+"\n"
+                         + "discription: "+newpackage.getDiscription()+"\n"
+                         + "price: "+newpackage.getPrice()+"\n"
+                         + "amount: "+newpackage.getAmount()+"\n"
+                         + "dispatched: "+newpackage.getDispatched()+"\n"
+                         + "issued: "+newpackage.getIssued();
+                 System.out.println("package found! \n"+packageInfo+"\n insert the amount of package to issue.");
+                 int amount = in.nextInt();
+                 if(amount>0){
+                    newpackage.Issue(amount);
+                    System.out.println("the package has been sucessfully issued");
+                 }else{
+                     System.out.println("invaild amount.");                     
+                 }
+            }else{
+                i++;
+                System.out.print(displayablemsg +FIELDS[i]+"=");
+                newpackage.setName(in.next());
+                i++;
+                System.out.print(displayablemsg +FIELDS[i]+"=");
+                newpackage.setDiscription(in.next());
+                i++;
+                System.out.print(displayablemsg +"issued "+FIELDS[i]+"=");
+                newpackage.Issue(in.nextLong());
+                i++;
+                System.out.print(displayablemsg +FIELDS[i]+"=");
+                newpackage.setPrice(in.nextDouble());
+            }
         }
     }
 }

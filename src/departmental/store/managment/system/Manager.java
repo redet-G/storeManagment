@@ -73,6 +73,9 @@ public class Manager {
                             //dispatch pakage after searching it
                              UoGStore.dispatch();
                              return 1;
+                        case 4:
+                            UoGStore.issue();
+                            return 1;
                         case 6:
                             int selRep = reportMenu();
                             switch(selRep){
