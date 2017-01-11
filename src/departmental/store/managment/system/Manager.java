@@ -36,7 +36,7 @@ public class Manager {
                         "       2)display packages\n" +
                         "       3)dispatch packges\n" +
                         "       4)issue packages\n" +
-                        "       5)process and sort the store\n" +
+                        "       5)sort packages\n" +
                         "       6)REPORT MENU\n" +
                         "       7)export package list to other file format\n" +
                         "       0)back to MAIN MENU\n";
@@ -51,41 +51,80 @@ public class Manager {
                               "      0)back to MAIN MENU";
         return getInt(menu,"REPORT MENU",0,2);    
     }
-    public int update(){
+        public static int exportListMenu(){
+                String menu = " EXPORTING LIST OF PACKAGES\n" +
+                              "      1)HTML (web page)\n" +
+                              "      2)CSV(spreed sheet)\n" +
+                              "      3)TXT(text file)\n" +
+                              "      0)back to MAIN MENU";
+        return getInt(menu,"REPORT MENU",0,3);    
+    }
+    public int update() throws IOException{
         int sle=mainMenu();
         switch(sle){
             case 0:
                 return 0;
             case 1:
                 {
-                    int seleSto = storeMenu();
-                    switch(seleSto){
-                        // list all the cases here
-                        case 0:
-                             return 1;
-                        case 1:
-                            register();
-                            return 1;
-                        case 2:
-                            UoGStore.display();
-                            return 1;
-                        case 3:
-                            //dispatch pakage after searching it
-                             UoGStore.dispatch();
-                             return 1;
-                        case 4:
-                            UoGStore.issue();
-                            return 1;
-                        case 6:
-                            int selRep = reportMenu();
-                            switch(selRep){
-                                // list all the cases here
-                                case 0:
-                                    return 2;
-
+                    int seleSto;
+                    do{
+                        seleSto = storeMenu();
+                        switch(seleSto){
+                            // list all the cases here
+                            case 0:
+                                 return 1;
+                            case 1:
+                                register();
+                                break;
+                            case 2:
+                                UoGStore.display();
+                                break;
+                            case 3:
+                                //dispatch pakage after searching it
+                                 UoGStore.dispatch();
+                                 break;
+                            case 4:
+                                UoGStore.issue();
+                                break;
+                            case 5:
+                                UoGStore.sort();
+                                break;
+                            case 6:{
+                                int selRep;
+                                do{
+                                selRep = reportMenu();
+                                switch(selRep){
+                                    // list all the cases here
+                                    case 0:
+                                        break;
+                                    case 1:
+                                    }
+                                }while(selRep!=0);
                             }
-                        
-                    }
+                            break;
+                            case 7:
+                            {
+                                int selRep;
+                                do{
+                                selRep = exportListMenu();
+                                switch(selRep){
+                                    // list all the cases here
+                                    case 0:
+                                        break;
+                                    case 1:
+                                        UoGStore.exportTo(FileType.HTML);
+                                        break;
+                                    case 2:
+                                        UoGStore.exportTo(FileType.CSV);
+                                        break;
+                                    case 3:
+                                        UoGStore.exportTo(FileType.TXT);
+                                        break;
+                                    }
+                                }while(selRep!=0);
+                            }
+                        }            
+                 }while(seleSto!=0);
                 }
                  break;
             case 2:
@@ -97,7 +136,7 @@ public class Manager {
             case 4:
                 UoGStore.setting();
                 return 1;
-        }
+        }        
         return 0;
     }
     public static int getInt(String prompt,String promptTitle, int startInt, int endInt){

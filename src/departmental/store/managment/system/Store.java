@@ -2,7 +2,11 @@
 package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -30,7 +34,7 @@ public class Store {
         this();
         this.name=name;
     }
-    
+
     /**
      * this method is used to display the list of packages that the store has
      */
@@ -46,7 +50,7 @@ public class Store {
      * else it return false if the package already exits with the same code
      *
      * @param p the package to register.
-     * @return true success full addition of package. false on filer 
+     * @return true success full addition of package. false on filer
      */
     public boolean append(Package p){
         if(!isInTheStore(p.getCode())){
@@ -58,7 +62,7 @@ public class Store {
     /**
      * calculates the total asset of the packages and returns it as double
      * @return total asset of the packages in the store
-     */    
+     */
     public double calculateAsset(){
        double totalAsset=0.0d;
        for(int i=0;i<top;i++){
@@ -77,18 +81,18 @@ public class Store {
             tEnter();
         }
     }
-    
+
     public void gEnter(){
         Package newpackage= new Package();
         int i=0;
-        String displayablemsg="insert package infomation \n";       
+        String displayablemsg="insert package infomation \n";
         try {
             String temp=JOptionPane.showInputDialog(null,displayablemsg +FIELDS[i]+"=","package registration",JOptionPane.PLAIN_MESSAGE);
             newpackage.setCode(temp);
             if(isInTheStore(temp)){
             //package is found
                newpackage = packageWith(temp);
-               
+
                String packageInfo = "code: "+temp+"\n"
                          + "name: " +newpackage.getName()+"\n"
                          + "discription: "+newpackage.getDiscription()+"\n"
@@ -103,7 +107,7 @@ public class Store {
                  }else{
                      throw new NumberFormatException("invalid amount.");
                  }
-                 
+
             }else{
                 displayablemsg+=FIELDS[i]+": "+temp+"\n";
                 i++;
@@ -127,8 +131,8 @@ public class Store {
          } catch (HeadlessException | NumberFormatException e) {
              JOptionPane.showMessageDialog(null,e.getLocalizedMessage()+" please try again","error alert message",JOptionPane.ERROR_MESSAGE);
              gEnter();
-        }        
-    }  
+        }
+    }
     public void tEnter(){
         Package newpackage= new Package();
         Scanner in = new Scanner(System.in);
@@ -155,7 +159,7 @@ public class Store {
                 newpackage.addAmount(amount);
                 System.out.println("the package has been sucessfully registered");
              }else{
-                 System.out.println("invaild amount.");                     
+                 System.out.println("invaild amount.");
              }
         }else{
             i++;
@@ -187,7 +191,7 @@ public class Store {
             }
             JTable t = new JTable(table,columen);
             JOptionPane.showMessageDialog(null,t,"summery of the store",JOptionPane.INFORMATION_MESSAGE);
-        }else{            
+        }else{
             JOptionPane.showMessageDialog(null,toString(),"summery of the store",JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -210,15 +214,21 @@ public class Store {
             for(int i=0;i<top;i++){
                 String temp = list[i].getCode();
                 if(temp!=null && temp.equalsIgnoreCase(code))
-                    return true;            
+                    return true;
             }
-        }        
+        }
         return false;
     }
     public void sort(){
         Package[] temp= new Package[top];
         System.arraycopy(list,0,temp,0,top);
         Arrays.sort(temp);
+        System.arraycopy(temp,0,list,0,top);
+        if(GUI.DEFAULT_UI==userInterface.GRAPHICAL){
+           JOptionPane.showMessageDialog(null, "sucessfully sorted packages by thier code.");
+        }else{
+            System.out.println("sucessfully sorted packages by thier code.");
+        }
     }
     /**
      * function for setting the UI.
@@ -227,17 +237,17 @@ public class Store {
         if(GUI.DEFAULT_UI==userInterface.GRAPHICAL){
             gSetting();
         }else{
-            tSetting();            
+            tSetting();
         }
     }
-    
+
     public void gSetting(){
         int b;
         b = JOptionPane.showConfirmDialog(null, "do you want to change the user interface.","change the UI",JOptionPane.YES_NO_OPTION);
         if(b==0)
             GUI.toggle();
     }
-    
+
     public void tSetting(){
         Scanner in=new Scanner(System.in);
         System.out.println("do you want to change the user interface? (Y/n)");
@@ -249,7 +259,7 @@ public class Store {
             System.out.println("invalid input. try again");
             tSetting();
         }
-         
+
     }
     public void dispatch(){
          if(GUI.DEFAULT_UI==userInterface.GRAPHICAL){
@@ -267,16 +277,16 @@ public class Store {
                          + "amount: "+dispachable.getAmount()+"\n"
                          + "dispatched: "+dispachable.getDispatched()+"\n"
                          + "issued: "+dispachable.getIssued();
-                 int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of package to dispache."));               
+                 int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of package to dispache."));
                  if(amount > dispachable.getAmount())
                  {
                      JOptionPane.showMessageDialog(null,"invalid amount.","ERROR",JOptionPane.ERROR_MESSAGE);
                  }else{
                      dispachable.dispatch(amount);
-                 }                
-                 
+                 }
+
              }
-             
+
          }else{
              //do the terminal dispatch
              Scanner in = new Scanner(System.in);
@@ -296,7 +306,7 @@ public class Store {
                      System.out.println("invalid amount.");
                  }else{
                      dispachable.dispatch(amount);
-                 }  
+                 }
              }
          }
     }
@@ -334,7 +344,7 @@ public class Store {
                          throw new NumberFormatException("invalid amount.");
                      }
 
-                }else{    
+                }else{
                     newpackage.setCode(temp);
                     displayablemsg+=FIELDS[i]+": "+temp+"\n";
                     i++;
@@ -380,7 +390,7 @@ public class Store {
                     newpackage.Issue(amount);
                     System.out.println("the package has been sucessfully issued");
                  }else{
-                     System.out.println("invaild amount.");                     
+                     System.out.println("invaild amount.");
                  }
             }else{
                 i++;
@@ -398,4 +408,69 @@ public class Store {
             }
         }
     }
+    public void exportTo(FileType type) throws IOException{
+        if(top!=0){
+            switch(type){
+                case HTML:{
+                    String HTMLData="<!DOCTYPE html><html><head><title>Departmental Store Management System</title><style>td{border: solid 2px #ddd;}tr:hover{background:#ddd;}</style></head><body><h2>property list</h2><table>\n" +
+                            "<tr>	\n" +
+                                "<td>code</td>	\n" +
+                                "<td>name</td>\n" +
+                                "<td>discretion</td>\n" +
+                                "<td>quantity</td>		\n" +
+                                "<td>unit price</td>\n" +
+                                "<td>dispatched</td>\n" +
+                                "<td>issued</td>\n" +
+                            "</tr> ";
+                    for(int i=0;i<top;i++){
+                        HTMLData+="<tr>";
+                                for(Object s : list[i].toArray()){
+                                    HTMLData+="<td>"+s.toString()+"</td>\n";
+                                }
+                        HTMLData+="</tr>";
+                    }
+                    HTMLData+="</table><br/> this file is generated using store management software.</body></html>";
+                    File HTMLfile = new File("html-list-exported.html");
+                    FileWriter file = new FileWriter(HTMLfile);
+                    file.write(HTMLData);
+                    file.close();
+                    Desktop.getDesktop().open(HTMLfile);
+                }
+                    break;
+                case CSV:{
+                    String CSVData="code,name,discretion,quantity,unit price,dispatched,issued\n";
+                    for(int i=0;i<top;i++){
+                                for(Object s : list[i].toArray()){
+                                    CSVData+=s.toString()+",";
+                                }
+                        CSVData+="\n";
+                    }
+                    CSVData+="\nthis file is generated using store management software.";
+                    File CSVfile = new File("csv-list-exported.csv");
+                    FileWriter file = new FileWriter(CSVfile);
+                    file.write(CSVData);
+                    file.close();
+                    Desktop.getDesktop().open(CSVfile);
+                }
+                    break;
+                case TXT:{
+                    String TXTData=toString();
+                    TXTData+="\nthis file is generated using store management software.";
+                    File TXTfile = new File("txt-list-exported.txt");
+                    FileWriter file = new FileWriter(TXTfile);
+                    file.write(TXTData);
+                    file.close();
+                    Desktop.getDesktop().open(TXTfile);
+                }
+                    break;
+            }
+        }else{
+            if(DEFAULT_UI==userInterface.GRAPHICAL){
+                JOptionPane.showMessageDialog(null,"can not export an empty store.","error message",JOptionPane.ERROR_MESSAGE);
+            }else{
+                System.out.println("error: can not export an empty stroe.");
+            }
+        }
+    }
+
 }
