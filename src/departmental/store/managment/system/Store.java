@@ -481,4 +481,9 @@ public class Store implements Serializable{
         ObjectOutputStream ois = new ObjectOutputStream(new FileOutputStream(StoreData));
         ois.writeObject(this);
     }
+    public Report toReport(){
+        Package[] p = new Package[top];
+        System.arraycopy(list,0,p,0,top);
+        return new Report(p,"Store report","");
+    }
 }

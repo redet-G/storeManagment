@@ -105,11 +105,15 @@ public class Manager {
                                 int selRep;
                                 do{
                                 selRep = reportMenu();
+                                Report StoreReport = UoGStore.toReport();
                                 switch(selRep){
                                     // list all the cases here
                                     case 0:
                                         break;
                                     case 1:
+                                        StoreReport.display();
+                                    case 2:
+                                    
                                     }
                                 }while(selRep!=0);
                             }
