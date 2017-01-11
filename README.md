@@ -31,7 +31,7 @@ following functions.
  one of the main feature of this program is its ability    
  to produce reports. This way one can easily understand    
  the performance of the store. And this reports can        
- easily exported to other file formats, like word docu-    
+ easily be exported to other file formats, like word docu-    
  ments and spread sheet, for further analysis.
 
 # features to support
