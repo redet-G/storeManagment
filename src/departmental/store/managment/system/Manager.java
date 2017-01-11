@@ -7,7 +7,10 @@ package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
 import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -18,8 +21,16 @@ import javax.swing.JOptionPane;
  */
 public class Manager {
     public Store UoGStore;
-    public Manager(Store a){
-        UoGStore=a;
+    private final String FileName;//the file name to store the Store class to.
+    public Manager(Store a,String FileName) throws IOException, ClassNotFoundException{
+        this.FileName=FileName;
+        File StoreData= new File(FileName);
+        if(StoreData.exists()){
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(StoreData));
+            UoGStore = (Store)ois.readObject();
+        }else{
+            UoGStore=a;
+        }
     }
      public static int mainMenu(){
         String menu = "MAIN MENU\n"
@@ -88,6 +99,7 @@ public class Manager {
                                 break;
                             case 5:
                                 UoGStore.sort();
+                                UoGStore.saveStoreTo(FileName);//save the Store class after sorting it's packages
                                 break;
                             case 6:{
                                 int selRep;
@@ -245,7 +257,7 @@ public class Manager {
             }
         }
     }
-    public void register(){
+    public void register() throws IOException{
         //register a pakcage here
         boolean isCont;
         do{
@@ -262,6 +274,6 @@ public class Manager {
                 isCont=isTrue.equalsIgnoreCase("Y");
             }
         }while(isCont);
+        UoGStore.saveStoreTo(FileName);//save the Store to a file after the registering some packages
     }
-
 }

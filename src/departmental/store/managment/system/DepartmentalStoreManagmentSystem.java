@@ -6,6 +6,7 @@
 package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
+import java.io.IOException;
 
 
 /**
@@ -18,7 +19,7 @@ public class DepartmentalStoreManagmentSystem {
      * @param args the command line arguments
      */
     private static Store UoGStore;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 //        // TODO code application logic here
 //        Store s = new Store("Univerty of Gondar");
 //        Package one = new Package("1","laptop",4550.0);
@@ -36,7 +37,7 @@ public class DepartmentalStoreManagmentSystem {
 //        s.dispatch();
         
          UoGStore = new Store("Univerty of Gondar");
-         Manager uogStoreManager = new Manager(UoGStore);
+         Manager uogStoreManager = new Manager(UoGStore,"store.db");
          DEFAULT_UI=userInterface.GRAPHICAL;
         while(uogStoreManager.update()!=0);
     }

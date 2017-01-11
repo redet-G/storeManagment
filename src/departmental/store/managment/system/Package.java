@@ -6,6 +6,7 @@
 package departmental.store.managment.system;
 
 import java.awt.HeadlessException;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
  * this class will encapsulate a package of the objects stored in the store;
  * @author redet
  */
-public class Package extends GUI implements Comparable {
+public class Package extends GUI implements Comparable,Serializable {
     private static int length;
     private String code;
     private long amount=0;

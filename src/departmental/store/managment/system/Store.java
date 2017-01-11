@@ -5,8 +5,12 @@ import static departmental.store.managment.system.GUI.DEFAULT_UI;
 import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -16,7 +20,7 @@ import javax.swing.JTable;
  * store class is the class responsible to manage packages
  * @author redet
  */
-public class Store {
+public class Store implements Serializable{
     private int top;
     private final int size=100;
     private Package[] list;
@@ -472,5 +476,9 @@ public class Store {
             }
         }
     }
-
+    public void saveStoreTo(String FileName) throws FileNotFoundException, IOException{
+        File StoreData= new File(FileName);
+        ObjectOutputStream ois = new ObjectOutputStream(new FileOutputStream(StoreData));
+        ois.writeObject(this);
+    }
 }
