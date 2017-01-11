@@ -1,4 +1,4 @@
-# Departmental Store Managment System
+# Departmental Store Management System
 this netbeans project is created only for learning java.
 
 Departmental store management system is a program          
@@ -20,7 +20,7 @@ following functions.
                                                            
 -Managing the issued properties that the store doesn't     
  have:- this is important in a way that the issued pr-     
- oducts can be managed easly.                              
+ oducts can be managed easily.                              
                                                            
 -Recoding dispatched properties:- dispatched properties    
  are products that have been sent to other departments.    
@@ -40,5 +40,5 @@ following functions.
 - [x] package issuing
 - [x] package dispatching
 - [x] package list exporting to some file formates(html,csv,text)
-- [ ] generating report
+- [x] generating report
 - [ ] exporting generated report some file formates(html,csv,text)
