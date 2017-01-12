@@ -20,21 +20,6 @@ public class DepartmentalStoreManagmentSystem {
      */
     private static Store UoGStore;
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-//        // TODO code application logic here
-//        Store s = new Store("Univerty of Gondar");
-//        Package one = new Package("1","laptop",4550.0);
-//                one.setAmount(1343);
-//        s.append(one);
-//     //   s.enterPackage();
-//        
-//        s.append(new Package("10","laptop",4550.0));
-//        s.append(new Package("2","laptop",4550.0));
-//        s.append(new Package("8","laptop",4550.0));
-//        s.display();
-//        s.sort();
-//        s.display();
-//        s.gSetting();
-//        s.dispatch();
         
          UoGStore = new Store("Univerty of Gondar");
          Manager uogStoreManager = new Manager(UoGStore,"store.db");
