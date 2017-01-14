@@ -51,7 +51,7 @@ public class Store implements Serializable{
     }
     /**
      * this function return true if it successfully adds the package i.e. the package is unique.
-     * else it return false if the package already exits with the same code
+     * else it return false if0 the package already exits with the same code
      *
      * @param p the package to register.
      * @return true success full addition of package. false on filer
