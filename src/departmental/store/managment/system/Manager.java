@@ -166,7 +166,7 @@ public class Manager {
                         JOptionPane.showMessageDialog(null,"invalid input","invalid input detected",JOptionPane.ERROR_MESSAGE);
                         temp=Integer.parseInt(JOptionPane.showInputDialog(null,prompt,promptTitle,JOptionPane.INFORMATION_MESSAGE));
                     }
-                }
+                }   
                 
            }catch(HeadlessException | NumberFormatException e){
                 JOptionPane.showMessageDialog(null,"invalid input","invalid input detected",JOptionPane.ERROR_MESSAGE);
@@ -178,18 +178,19 @@ public class Manager {
              int temp;
              try{
                 temp =in.nextInt();
+                while(true){
+                    if(temp>=startInt&&temp<=endInt){
+                        return temp;
+                    }else{
+                        System.out.println("invalid input detected, try again.");
+                        temp = in.nextInt();
+                    }
+                }
              }catch(InputMismatchException e){
                 System.out.println("invalid input try again.");
-                temp =in.nextInt();
+                return getInt(prompt,promptTitle,startInt,endInt);
              }
-             while(true){
-                if(temp>=startInt&&temp<=endInt){
-                    return temp;
-                }else{
-                    System.out.println("invalid input detected, try again.");
-                    temp = in.nextInt();
-                }
-             }
+             
          }
     }
     public static void about(){
@@ -200,9 +201,9 @@ public class Manager {
                         "       Developers:REDET GETACHEW(3928/08)        \n" +
                         "                  ZELALEM ZERFU(4046/08)         \n" +
                         "                  TAMIRESILASSIE TILAHUN(3974/08)\n" +
-                        "                  YOHANNES TADESSE(4036/08)      \n" +
+                        "                  YOHANNES MENGISTU(4034/08)     \n" +
                         "                  YOHANNES NIGUSSIE(4033/08)     \n" +
-                        "                                                 \n" +
+                        "                  SAMUEL KASSAW(07486/09)        \n" +
                         "       (c) Copyright 2017. All Rights Reserved.";
         if(DEFAULT_UI==userInterface.GRAPHICAL){
             JOptionPane.showMessageDialog(null,MESSAGE,"ABOUT",JOptionPane.INFORMATION_MESSAGE);

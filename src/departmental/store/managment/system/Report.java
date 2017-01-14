@@ -47,12 +47,12 @@ public final class Report {
                     "is rounded.\n"+
                 "____________________________\n";
         for(int i=0,listWithColumen=list.length+1;i<listWithColumen;i++){
-            temp+=String.format("%-4s | %4s %n",comparePackagesTable[i][0],comparePackagesTable[i][1]);
+            temp+=String.format("%-20s | %20s %n",comparePackagesTable[i][0],comparePackagesTable[i][1]);
         }
         temp+="____________________________\n"
                 +"total asset of the store is "+TotalAsset+" birr\n"
                 + "the issued items will cost "+costOFissuedItems+" birr\n"
-                + "the disptched items cost "+costOFissuedItems+" birr\n\n"
+                + "the disptched items cost "+costOFdispatched+" birr\n\n"
                 + "this is genetered using store management program.";
         return temp;
     }
