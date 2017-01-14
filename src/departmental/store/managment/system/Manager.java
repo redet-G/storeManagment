@@ -166,7 +166,7 @@ public class Manager {
                         JOptionPane.showMessageDialog(null,"invalid input","invalid input detected",JOptionPane.ERROR_MESSAGE);
                         temp=Integer.parseInt(JOptionPane.showInputDialog(null,prompt,promptTitle,JOptionPane.INFORMATION_MESSAGE));
                     }
-                }
+                }   
                 
            }catch(HeadlessException | NumberFormatException e){
                 JOptionPane.showMessageDialog(null,"invalid input","invalid input detected",JOptionPane.ERROR_MESSAGE);
@@ -178,18 +178,19 @@ public class Manager {
              int temp;
              try{
                 temp =in.nextInt();
+                while(true){
+                    if(temp>=startInt&&temp<=endInt){
+                        return temp;
+                    }else{
+                        System.out.println("invalid input detected, try again.");
+                        temp = in.nextInt();
+                    }
+                }
              }catch(InputMismatchException e){
                 System.out.println("invalid input try again.");
-                temp =in.nextInt();
+                return getInt(prompt,promptTitle,startInt,endInt);
              }
-             while(true){
-                if(temp>=startInt&&temp<=endInt){
-                    return temp;
-                }else{
-                    System.out.println("invalid input detected, try again.");
-                    temp = in.nextInt();
-                }
-             }
+             
          }
     }
     public static void about(){
