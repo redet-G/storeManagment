@@ -200,9 +200,9 @@ public class Manager {
                         "       Developers:REDET GETACHEW(3928/08)        \n" +
                         "                  ZELALEM ZERFU(4046/08)         \n" +
                         "                  TAMIRESILASSIE TILAHUN(3974/08)\n" +
-                        "                  YOHANNES TADESSE(4036/08)      \n" +
+                        "                  YOHANNES MENGISTU(4034/08)     \n" +
                         "                  YOHANNES NIGUSSIE(4033/08)     \n" +
-                        "                                                 \n" +
+                        "                  SAMUEL KASSAW(07486/09)        \n" +
                         "       (c) Copyright 2017. All Rights Reserved.";
         if(DEFAULT_UI==userInterface.GRAPHICAL){
             JOptionPane.showMessageDialog(null,MESSAGE,"ABOUT",JOptionPane.INFORMATION_MESSAGE);
