@@ -41,4 +41,4 @@ following functions.
 - [x] package dispatching
 - [x] package list exporting to some file formates(html,csv,text)
 - [x] generating report
-- [ ] exporting generated report some file formates(html,csv,text)
+- [x] exporting generated report some file formates(html,csv,text)

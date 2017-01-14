@@ -1,21 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-/**
- *
- * @author redet
- */
-public final class Report {
+public final class Report implements displayable{
     private final Package[] list;
     private final String header;
     private final String bodyText;
@@ -33,6 +29,7 @@ public final class Report {
         comparePackagesTable[0][1]="percentage";
         calculate();
     }
+    @Override
      public void display(){
         if(DEFAULT_UI!=userInterface.TERMINAL){
             gShow();
@@ -78,7 +75,8 @@ public final class Report {
         }
     }
 
-    private void gShow() {
+    @Override
+    public void gShow() {
         String temp="<html><h3>"+header+"</h3><br>"+bodyText+"<br>the table shows property model with its<br/>" +
             "corresponding percentage of its price compared with<br/>" +
             "the total asset of the store. note that the percentage<br/>" +
@@ -98,7 +96,46 @@ public final class Report {
 
     }
 
-    private void tShow() {
+     public void exportTo(FileType type) throws IOException{
+            switch(type){
+                case HTML:{
+                    String HTMLData="<!DOCTYPE html><html><head><title>Departmental Store Management System</title><style>td{border: solid 2px #ddd;}tr:hover{background:#ddd;}</style></head><body><h2>"+header+"</h2>"+bodyText+"<table>";
+                    for(int i=1,listWithColumen=list.length+1;i<listWithColumen;i++){                        
+                        HTMLData+="<tr><td>"+comparePackagesTable[i][0]+"</td><td>"+comparePackagesTable[i][0]+"</td></tr>";
+                    }
+                    HTMLData+="</table><br/> this file is generated using store management software.</body></html>";
+                    File HTMLfile = new File("html-report-exported.html");
+                    FileWriter file = new FileWriter(HTMLfile);
+                    file.write(HTMLData);
+                    file.close();
+                    Desktop.getDesktop().open(HTMLfile);
+                }
+                    break;
+                case CSV:{
+                    String CSVData=header+"\n"+bodyText+"\n";
+                    for(int i=1,listWithColumen=list.length+1;i<listWithColumen;i++){  
+                        CSVData+=comparePackagesTable[i][0]+","+comparePackagesTable[i][1]+"\n";
+                    }
+                    CSVData+="\nthis file is generated using store management software.";
+                    File CSVfile = new File("csv-report-exported.csv");
+                    FileWriter file = new FileWriter(CSVfile);
+                    file.write(CSVData);
+                    file.close();
+                    Desktop.getDesktop().open(CSVfile);
+                }
+                    break;
+                case TXT:{
+                    File TXTfile = new File("txt-report-exported.txt");
+                    FileWriter file = new FileWriter(TXTfile);
+                    file.write(toString());
+                    file.close();
+                    Desktop.getDesktop().open(TXTfile);
+                }
+                    break;
+            }
+    }
+    @Override
+    public void tShow() {
         System.out.println(toString());
     }
     
