@@ -6,7 +6,9 @@
 package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 
 /**
@@ -45,9 +47,10 @@ public final class Report {
                     "corresponding percentage of its price compared with\n" +
                     "the total asset of the store. note that the percentage\n" +
                     "is rounded.\n"+
-                "____________________________\n";
-        for(int i=0,listWithColumen=list.length+1;i<listWithColumen;i++){
-            temp+=String.format("%-20s | %20s %n",comparePackagesTable[i][0],comparePackagesTable[i][1]);
+                    "____________________________\n";
+        temp+=String.format("%15s|%5s %n",comparePackagesTable[0][0],comparePackagesTable[0][1]);
+        for(int i=1,listWithColumen=list.length+1;i<listWithColumen;i++){
+            temp+=String.format("%15s|%10f %n",comparePackagesTable[i][0],(double)comparePackagesTable[i][1]);
         }
         temp+="____________________________\n"
                 +"total asset of the store is "+TotalAsset+" birr\n"
@@ -76,12 +79,22 @@ public final class Report {
     }
 
     private void gShow() {
-        String temp="the following table shows property model with its\n" +
-            "corresponding percentage of its price compared with\n" +
-            "the total asset of the store. note that the percentage\n" +
-            "is rounded.\n";
-        //JTable t = new JTable(comparePackagesTable,new String[]{"code","percentage"});
-        JOptionPane.showMessageDialog(null,toString(),"Report",JOptionPane.INFORMATION_MESSAGE);
+        String temp="<html><h3>"+header+"</h3><br>"+bodyText+"<br>the table shows property model with its<br/>" +
+            "corresponding percentage of its price compared with<br/>" +
+            "the total asset of the store. note that the percentage<br/>" +
+            "is rounded.</html>";
+        String shortSummery="<html>total asset of the store is "+TotalAsset+" birr<br/>"
+                + "the issued items will cost "+costOFissuedItems+" birr<br/>"
+                + "the disptched items cost "+costOFdispatched+" birr<br/>"
+                + "this is genetered using store management program.<html>";
+        JPanel panel = new JPanel();
+        JLabel jl = new JLabel(temp);
+        JLabel jl2 = new JLabel(shortSummery);
+        JTable t = new JTable(comparePackagesTable,new String[]{"code","percentage"});
+        panel.add(jl);
+        panel.add(t);
+        panel.add(jl2);        
+        JOptionPane.showMessageDialog(null,panel,"Report",JOptionPane.INFORMATION_MESSAGE);
 
     }
 

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package departmental.store.managment.system;
 
 import java.awt.HeadlessException;
@@ -15,7 +11,7 @@ import javax.swing.JOptionPane;
  * this class will encapsulate a package of the objects stored in the store;
  * @author redet
  */
-public class Package extends GUI implements Comparable,Serializable {
+public class Package extends GUI implements Comparable,Serializable, displayable {
     private static int length;
     private String code;
     private long amount=0;
@@ -198,7 +194,8 @@ public class Package extends GUI implements Comparable,Serializable {
             System.out.print(displayablemsg +fileds[i]+"=");
             setPrice(in.nextDouble());
     }
-    public void tshow(){
+    @Override
+    public void tShow(){
            String info = "code: "+code+"\n"
                          + "name: " +getName()+"\n"
                          + "discription: "+getDiscription()+"\n"
@@ -263,11 +260,12 @@ public class Package extends GUI implements Comparable,Serializable {
         throw new UnsupportedOperationException("incomparable object type");
     }
     
-    public void show(){
+    @Override
+    public void display(){
        if(GUI.DEFAULT_UI==userInterface.GRAPHICAL){
            gShow();
        }else{
-           tshow();
+           tShow();
        }
     }
 }

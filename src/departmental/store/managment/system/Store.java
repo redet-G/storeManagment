@@ -20,7 +20,7 @@ import javax.swing.JTable;
  * store class is the class responsible to manage packages
  * @author redet
  */
-public class Store implements Serializable{
+public class Store implements Serializable, displayable{
     private int top;
     private final int size=100;
     private Package[] list;
@@ -51,7 +51,7 @@ public class Store implements Serializable{
     }
     /**
      * this function return true if it successfully adds the package i.e. the package is unique.
-     * else it return false if0 the package already exits with the same code
+     * else it return false if the package already exits with the same code
      *
      * @param p the package to register.
      * @return true success full addition of package. false on filer
@@ -64,20 +64,8 @@ public class Store implements Serializable{
         return false;
     }
     /**
-     * calculates the total asset of the packages and returns it as double
-     * @return total asset of the packages in the store
+     * register a package with proper UI
      */
-    public double calculateAsset(){
-       double totalAsset=0.0d;
-       for(int i=0;i<top;i++){
-            totalAsset+=list[i].getAsset();
-        }
-       return totalAsset;
-    }
-
-/**
- * register a package with proper UI
- */
    public void enterPackage(){
         if(DEFAULT_UI!=userInterface.TERMINAL){
             gEnter();
@@ -184,6 +172,7 @@ public class Store implements Serializable{
     public void tShow(){
         System.out.println(toString());
     }
+    @Override
     public void gShow(){
         if(top!=0){
             String[] columen = {"code", "name ", "discription" , "price" , "amount" , "dispatched" , "issued"};
@@ -302,7 +291,7 @@ public class Store implements Serializable{
              }else{
                  System.out.println("package found!");
                  Package dispachable = packageWith(code);
-                 dispachable.show();
+                 dispachable.display();
                  System.out.println("insert the amount of package to dispache.");
                  int amount = in.nextInt();
                  if(amount > dispachable.getAmount())
@@ -416,7 +405,7 @@ public class Store implements Serializable{
         if(top!=0){
             switch(type){
                 case HTML:{
-                    String HTMLData="<!DOCTYPE html><html><head><title>Departmental Store Management System</title><style>td{border: solid 2px #ddd;}tr:hover{background:#ddd;}</style></head><body><h2>property list</h2><table>\n" +
+                    String HTMLData="<!DOCTYPE html><html><head><title>Departmental Store Management System</title><style>td{border: solid 2px #ddd;}tr:hover{background:#ddd;}</style></head><body><h2>list of store package for "+name+"</h2><table>\n" +
                             "<tr>	\n" +
                                 "<td>code</td>	\n" +
                                 "<td>name</td>\n" +
@@ -442,7 +431,7 @@ public class Store implements Serializable{
                 }
                     break;
                 case CSV:{
-                    String CSVData="code,name,discretion,quantity,unit price,dispatched,issued\n";
+                    String CSVData="list of store package for "+name+"\ncode,name,discretion,quantity,unit price,dispatched,issued\n";
                     for(int i=0;i<top;i++){
                                 for(Object s : list[i].toArray()){
                                     CSVData+=s.toString()+",";
@@ -458,7 +447,7 @@ public class Store implements Serializable{
                 }
                     break;
                 case TXT:{
-                    String TXTData=toString();
+                    String TXTData="list of store package for "+name+"\n"+toString();
                     TXTData+="\nthis file is generated using store management software.";
                     File TXTfile = new File("txt-list-exported.txt");
                     FileWriter file = new FileWriter(TXTfile);
@@ -482,8 +471,11 @@ public class Store implements Serializable{
         ois.writeObject(this);
     }
     public Report toReport(){
-        Package[] p = new Package[top];
-        System.arraycopy(list,0,p,0,top);
-        return new Report(p,"Store report","");
+        if(top>0){
+        Package[] plist = new Package[top];
+        System.arraycopy(list,0,plist,0,top);
+        return new Report(plist,"Store report for "+name,"");
+        }
+        return null;
     }
 }

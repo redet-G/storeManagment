@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
@@ -103,9 +99,17 @@ public class Manager {
                                 break;
                             case 6:{
                                 int selRep;
-                                do{
-                                selRep = reportMenu();
+                                do{                                    
                                 Report StoreReport = UoGStore.toReport();
+                                if(StoreReport==null){
+                                    if(DEFAULT_UI==userInterface.GRAPHICAL){
+                                        JOptionPane.showMessageDialog(null,"some packages are needed to generate report.","the store is empty.",JOptionPane.ERROR_MESSAGE);
+                                   }else{
+                                        System.out.println("some packages are needed to generate report.\n but the store is empty.");
+                                    }
+                                    break;
+                                }
+                                selRep = reportMenu();
                                 switch(selRep){
                                     // list all the cases here
                                     case 0:
