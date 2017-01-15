@@ -63,17 +63,7 @@ public class Store implements Serializable{
         }
         return false;
     }
-    /**
-     * calculates the total asset of the packages and returns it as double
-     * @return total asset of the packages in the store
-     */
-    public double calculateAsset(){
-       double totalAsset=0.0d;
-       for(int i=0;i<top;i++){
-            totalAsset+=list[i].getAsset();
-        }
-       return totalAsset;
-    }
+
 
 /**
  * register a package with proper UI
