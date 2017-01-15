@@ -11,10 +11,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author redet
- */
+
 public class Manager {
     public Store UoGStore;
     private final String FileName;//the file name to store the Store class to.

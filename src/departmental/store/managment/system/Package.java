@@ -9,10 +9,8 @@ import javax.swing.JOptionPane;
 
 /**
  * this class will encapsulate a package of the objects stored in the store;
- * @author redet
  */
 public class Package extends GUI implements Comparable,Serializable, displayable {
-    private static int length;
     private String code;
     private long amount=0;
     private String name;
@@ -27,18 +25,9 @@ public class Package extends GUI implements Comparable,Serializable, displayable
         this.name = name;
         this.discription = discription;
         this.price = price;
-        length++;
     }
     public Package(){
         this(null,null,0,0,null);
-    }
-
-    public Package(String code, String name) {
-       this(code,name,0,0,null);
-    }
-
-    public Package(String code, String name, double price) {
-        this(code,name,0,price,null);
     }
 
     public String getCode() {
@@ -79,11 +68,12 @@ public class Package extends GUI implements Comparable,Serializable, displayable
         return issued;
     }
 
-    public void Issue(long amount) throws ArithmeticException {
-        if(amount > 0)
+    public boolean Issue(long amount) {
+        if(amount > 0){
            this.issued += amount;
-        else
-            throw new ArithmeticException("invalid number");
+           return true;
+        }else
+           return false;
     }
 
     public String getDiscription() {
@@ -98,14 +88,23 @@ public class Package extends GUI implements Comparable,Serializable, displayable
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public boolean setPrice(double price) {
+        if(0<=price){
+            this.price = price;
+            return true;
+        }
+        return false;
     }
     
     @Override
     public String toString() {
         return String.format("%-4s | %-5s | %-10s | %4f | %4d | %4d | %4d%n", code, name , discription , price , amount , dispatched, issued);
     }
+    
+    /**
+     * convert the package information and return it.
+     * @return array of package information
+     */
     public Object[] toArray(){
         return new Object[]{code, name , discription , price , amount , dispatched, issued};
     }
@@ -113,9 +112,7 @@ public class Package extends GUI implements Comparable,Serializable, displayable
     public long getDispatched() {
         return dispatched;
     }
-    public void resetDispatch(){
-       dispatched=0;
-    }
+
     public boolean dispatch(int a){
         if(amount>a){
             dispatched+=a;        
@@ -124,9 +121,7 @@ public class Package extends GUI implements Comparable,Serializable, displayable
         }
         return false;
     }
-    public int getLength(){
-        return length;
-    }
+    
     public double getAsset(){
         return price*amount;
     }
@@ -232,9 +227,18 @@ public class Package extends GUI implements Comparable,Serializable, displayable
     public int compareTo(Package otherPackage){
         return compare(this,otherPackage);
     }
-
+    
+     @Override
+    public int compareTo(Object o) {
+        if(o instanceof Package) {
+            Package aPackage = (Package) o;
+            return this.compareTo(aPackage);
+        }
+        throw new UnsupportedOperationException("incomparable object type");
+    }
+    
     private static int compare(Package aThis, Package otherPackage) {
-       char[] acode = aThis.getCode().toCharArray();
+        char[] acode = aThis.getCode().toCharArray();
        char[] ocode = otherPackage.getCode().toCharArray();
        int acodeV=0;
        int ocodeV=0;
@@ -249,15 +253,6 @@ public class Package extends GUI implements Comparable,Serializable, displayable
            return 1;
        }
        return 0;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        if(o instanceof Package) {
-            Package aPackage = (Package) o;
-            return this.compareTo(aPackage);
-        }
-        throw new UnsupportedOperationException("incomparable object type");
     }
     
     @Override

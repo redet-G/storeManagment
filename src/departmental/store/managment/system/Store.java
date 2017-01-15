@@ -3,7 +3,6 @@ package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
 import java.awt.Desktop;
-import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,8 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
- * store class is the class responsible to manage packages
- * @author redet
+ * store class is the class responsible 
+ *          to manage packages(i.e registering a package)
+ *          to store packages
+ *          to generate a store object 
  */
 public class Store implements Serializable, displayable{
     private int top;
@@ -40,8 +41,10 @@ public class Store implements Serializable, displayable{
     }
 
     /**
-     * this method is used to display the list of packages that the store has
+     * this method is used to display the list of packages that the store has.
+     * it is inherited from displayable interface
      */
+    @Override
     public void display(){
         if(DEFAULT_UI!=userInterface.TERMINAL){
             gShow();
@@ -73,7 +76,9 @@ public class Store implements Serializable, displayable{
             tEnter();
         }
     }
-
+    /**
+     * graphically register a package
+     */
     public void gEnter(){
         Package newpackage= new Package();
         int i=0;
@@ -120,11 +125,14 @@ public class Store implements Serializable, displayable{
                 displayablemsg+=FIELDS[i]+": "+temp+"\n";
                 append(newpackage);
             }
-         } catch (HeadlessException | NumberFormatException e) {
+         } catch (NumberFormatException e) {
              JOptionPane.showMessageDialog(null,e.getLocalizedMessage()+" please try again","error alert message",JOptionPane.ERROR_MESSAGE);
              gEnter();
         }
     }
+     /**
+     * register a package in the terminal(console)
+     */
     public void tEnter(){
         Package newpackage= new Package();
         Scanner in = new Scanner(System.in);
@@ -169,9 +177,12 @@ public class Store implements Serializable, displayable{
             append(newpackage);
         }
     }
+    //display the store in the console
+    @Override
     public void tShow(){
         System.out.println(toString());
     }
+    //display the store grahically
     @Override
     public void gShow(){
         if(top!=0){
@@ -188,6 +199,8 @@ public class Store implements Serializable, displayable{
             JOptionPane.showMessageDialog(null,toString(),"summery of the store",JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    
+    // convert the stote into the text formate
     @Override
     public String toString(){
         String summeryStr="";
@@ -202,16 +215,18 @@ public class Store implements Serializable, displayable{
         }
         return summeryStr;
     }
+    /**
+     * checks if the package is in the store.
+     * @param code the code of a package
+     * @return true if the package with code exists in the store else return false
+     */
     public boolean isInTheStore(String code){
-        if(top!=0){
-            for(int i=0;i<top;i++){
-                String temp = list[i].getCode();
-                if(temp!=null && temp.equalsIgnoreCase(code))
-                    return true;
-            }
-        }
-        return false;
+        return (null!=packageWith(code));
     }
+
+    /**
+     * sort the store packages by their code
+     */
     public void sort(){
         Package[] temp= new Package[top];
         System.arraycopy(list,0,temp,0,top);
@@ -224,7 +239,7 @@ public class Store implements Serializable, displayable{
         }
     }
     /**
-     * function for setting the UI.
+     * a method for setting the UI.
      */
     public void setting(){
         if(GUI.DEFAULT_UI==userInterface.GRAPHICAL){
@@ -233,14 +248,14 @@ public class Store implements Serializable, displayable{
             tSetting();
         }
     }
-
+    // toggle the UI with grahpical UI
     public void gSetting(){
         int b;
         b = JOptionPane.showConfirmDialog(null, "do you want to change the user interface.","change the UI",JOptionPane.YES_NO_OPTION);
         if(b==0)
             GUI.toggle();
     }
-
+    // toggle the UI with conolse UI
     public void tSetting(){
         Scanner in=new Scanner(System.in);
         System.out.println("do you want to change the user interface? (Y/n)");
@@ -254,6 +269,10 @@ public class Store implements Serializable, displayable{
         }
 
     }
+
+    /**
+     * dispatch a package from the store
+     */
     public void dispatch(){
          if(GUI.DEFAULT_UI==userInterface.GRAPHICAL){
              //do the graphical dipatch here
@@ -271,13 +290,12 @@ public class Store implements Serializable, displayable{
                          + "dispatched: "+dispachable.getDispatched()+"\n"
                          + "issued: "+dispachable.getIssued();
                  int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of package to dispache."));
-                 if(amount > dispachable.getAmount())
+                 if(!dispachable.dispatch(amount))
                  {
                      JOptionPane.showMessageDialog(null,"invalid amount.","ERROR",JOptionPane.ERROR_MESSAGE);
                  }else{
-                     dispachable.dispatch(amount);
+                     JOptionPane.showMessageDialog(null,"successfully dispatched");
                  }
-
              }
 
          }else{
@@ -303,6 +321,12 @@ public class Store implements Serializable, displayable{
              }
          }
     }
+
+    /**
+     * search for the package in the store and return it
+     * @param code code of the package
+     * @return package if it is found else return null
+     */
     public Package packageWith(String code){
         for(int i=0;i<top;i++){
             if(list[i].getCode().equalsIgnoreCase(code))
@@ -310,6 +334,10 @@ public class Store implements Serializable, displayable{
         }
         return null;
     }
+    
+    /**
+     * issue a package
+     */
     public void issue(){
         Package newpackage = new Package();
         String displayablemsg="insert package infomation \n";
@@ -330,8 +358,7 @@ public class Store implements Serializable, displayable{
                              + "issued: "+newpackage.getIssued();
 
                      int amount = Integer.parseInt(JOptionPane.showInputDialog(null,"package found! \n"+packageInfo+"\n insert the amount of package to issue."));
-                     if(amount>0){
-                        newpackage.Issue(amount);
+                     if(newpackage.Issue(amount)){
                         JOptionPane.showMessageDialog(null,"the package has been sucessfully issued");
                      }else{
                          throw new NumberFormatException("invalid amount.");
@@ -358,7 +385,7 @@ public class Store implements Serializable, displayable{
                     displayablemsg+=FIELDS[i]+": "+temp+"\n";
                     append(newpackage);
                 }
-             } catch (HeadlessException | NumberFormatException e) {
+             } catch (NumberFormatException e) {
                  JOptionPane.showMessageDialog(null,e.getLocalizedMessage()+" please try again","error alert message",JOptionPane.ERROR_MESSAGE);
                  gEnter();
             }
@@ -379,8 +406,7 @@ public class Store implements Serializable, displayable{
                          + "issued: "+newpackage.getIssued();
                  System.out.println("package found! \n"+packageInfo+"\n insert the amount of package to issue.");
                  int amount = in.nextInt();
-                 if(amount>0){
-                    newpackage.Issue(amount);
+                 if(newpackage.Issue(amount)){
                     System.out.println("the package has been sucessfully issued");
                  }else{
                      System.out.println("invaild amount.");
@@ -401,6 +427,12 @@ public class Store implements Serializable, displayable{
             }
         }
     }
+
+    /**
+     * export list of packages to a file and launch the file
+     * @param type the file type to export to.
+     * @throws IOException
+     */
     public void exportTo(FileType type) throws IOException{
         if(top!=0){
             switch(type){
@@ -458,6 +490,7 @@ public class Store implements Serializable, displayable{
                     break;
             }
         }else{
+            // do not export an empty list
             if(DEFAULT_UI==userInterface.GRAPHICAL){
                 JOptionPane.showMessageDialog(null,"can not export an empty store.","error message",JOptionPane.ERROR_MESSAGE);
             }else{
@@ -465,11 +498,23 @@ public class Store implements Serializable, displayable{
             }
         }
     }
+    
+    /**
+     * save the current sore object to a binary file.
+     * @param FileName the file name to save the object to.
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void saveStoreTo(String FileName) throws FileNotFoundException, IOException{
         File StoreData= new File(FileName);
         ObjectOutputStream ois = new ObjectOutputStream(new FileOutputStream(StoreData));
         ois.writeObject(this);
     }
+
+    /**
+     * generate or create a report from the current list of packages
+     * @return Report object with package list
+     */
     public Report toReport(){
         if(top>0){
         Package[] plist = new Package[top];
