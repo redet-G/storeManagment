@@ -12,22 +12,25 @@ import javax.swing.JOptionPane;
  */
 public class Package extends GUI implements Comparable,Serializable, displayable {
     private String code;
-    private long amount=0;
+    private long amount;
     private String name;
     private String discription;
     private double price;
-    private long dispatched=0;
-    private long issued=0;
+    private long dispatched;
+    private long issued;
 
-    public Package(String code, String name, long amount, double price, String discription) {
+    public Package(String code, String name, String discription, long amount, double price, long dispatched, long issued) {
         this.code = code;
         this.amount = amount;
         this.name = name;
         this.discription = discription;
         this.price = price;
+        this.dispatched = dispatched;
+        this.issued = issued;
     }
+
     public Package(){
-        this(null,null,0,0,null);
+        this(null,null,null,0,0,0,0);
     }
 
     public String getCode() {

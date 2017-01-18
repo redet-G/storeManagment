@@ -3,12 +3,15 @@ package departmental.store.managment.system;
 
 import static departmental.store.managment.system.GUI.DEFAULT_UI;
 import java.awt.Desktop;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -505,10 +508,19 @@ public class Store implements Serializable, displayable{
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void saveStoreTo(String FileName) throws FileNotFoundException, IOException{
-        File StoreData= new File(FileName);
-        ObjectOutputStream ois = new ObjectOutputStream(new FileOutputStream(StoreData));
-        ois.writeObject(this);
+    public void saveStoreTo(String FileName) throws IOException{
+        
+       DataOutputStream out = new DataOutputStream(new FileOutputStream(FileName));
+       for(int i=0;i<top;i++){
+            out.writeUTF(list[i].getCode());
+            out.writeUTF(list[i].getName());
+            out.writeUTF(list[i].getDiscription());
+            out.writeLong(list[i].getAmount());
+            out.writeDouble(list[i].getPrice());
+            out.writeLong(list[i].getDispatched());
+            out.writeLong(list[i].getIssued());
+       }
+            
     }
 
     /**
@@ -522,5 +534,18 @@ public class Store implements Serializable, displayable{
         return new Report(plist,"Store report for "+name,"");
         }
         return null;
+    }
+    public boolean load(String fileName){
+        try{
+            DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(fileName)));
+            while(in.available()!=0){
+                append(new Package(in.readUTF(),in.readUTF(),in.readUTF(),in.readLong(),in.readDouble(),in.readLong(),in.readLong()));
+            }
+            return true;
+        }catch(FileNotFoundException ex){
+           return false;
+        }catch (IOException ex) { 
+           return false;
+        }
     }
 }
