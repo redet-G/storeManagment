@@ -113,8 +113,27 @@ public class Manager {
                                         break;
                                     case 1:
                                         StoreReport.display();
+                                        break;
                                     case 2:
-                                    
+                                    {   int expoSel;
+						        do{
+						        expoSel = exportListMenu();
+						        switch(expoSel){
+						            // list all the cases here
+						            case 0:
+						                break;
+						            case 1:
+						                StoreReport.exportTo(FileType.HTML);
+						                break;
+						            case 2:
+						                StoreReport.exportTo(FileType.CSV);
+						                break;
+						            case 3:
+						                StoreReport.exportTo(FileType.TXT);
+						                break;
+						            }
+						        }while(expoSel!=0);
+                                    }
                                     }
                                 }while(selRep!=0);
                             }
