@@ -39,20 +39,20 @@ public final class Report implements displayable{
     }
     @Override
     public String toString(){
-        String temp=header+"\n"+bodyText+"\n"+
-                    "the following table shows property model with its\n" +
-                    "corresponding percentage of its price compared with\n" +
-                    "the total asset of the store. note that the percentage\n" +
-                    "is rounded.\n"+
-                    "____________________________\n";
+        String temp=header+"\r\n"+bodyText+"\r\n"+
+                    "the following table shows property model with its\r\n" +
+                    "corresponding percentage of its price compared with\r\n" +
+                    "the total asset of the store. note that the percentage\r\n" +
+                    "is rounded.\r\n"+
+                    "____________________________\r\n";
         temp+=String.format("%15s|%5s %n",comparePackagesTable[0][0],comparePackagesTable[0][1]);
         for(int i=1,listWithColumen=list.length+1;i<listWithColumen;i++){
             temp+=String.format("%15s|%10f %n",comparePackagesTable[i][0],(double)comparePackagesTable[i][1]);
         }
-        temp+="____________________________\n"
-                +"total asset of the store is "+TotalAsset+" birr\n"
-                + "the issued items will cost "+costOFissuedItems+" birr\n"
-                + "the disptched items cost "+costOFdispatched+" birr\n\n"
+        temp+="____________________________\r\n"
+                +"total asset of the store is "+TotalAsset+" birr\r\n"
+                + "the issued items will cost "+costOFissuedItems+" birr\r\n"
+                + "the disptched items cost "+costOFdispatched+" birr\r\n\r\n"
                 + "this is genetered using store management program.";
         return temp;
     }
@@ -99,11 +99,17 @@ public final class Report implements displayable{
      public void exportTo(FileType type) throws IOException{
             switch(type){
                 case HTML:{
-                    String HTMLData="<!DOCTYPE html><html><head><title>Departmental Store Management System</title><style>td{border: solid 2px #ddd;}tr:hover{background:#ddd;}</style></head><body><h2>"+header+"</h2>"+bodyText+"<table>";
-                    for(int i=1,listWithColumen=list.length+1;i<listWithColumen;i++){                        
-                        HTMLData+="<tr><td>"+comparePackagesTable[i][0]+"</td><td>"+comparePackagesTable[i][0]+"</td></tr>";
+                    String HTMLData="<!DOCTYPE html><html><head><title>Departmental Store Management System</title><style>td{border: solid 2px #ddd;}tr:hover{background:#ddd;}</style></head><body><h2>"+header+"</h2>"+bodyText+"<br>the table shows property model with its<br/>" +
+                            "corresponding percentage of its price compared with<br/>" +
+                            "the total asset of the store. note that the percentage<br/>" +
+                            "is rounded.<table>";
+                    for(int i=0,listWithColumen=list.length+1;i<listWithColumen;i++){                        
+                        HTMLData+="<tr><td>"+comparePackagesTable[i][0]+"</td><td>"+comparePackagesTable[i][1]+"</td></tr>";
                     }
-                    HTMLData+="</table><br/> this file is generated using store management software.</body></html>";
+                    HTMLData+="</table><br/> total asset of the store is "+TotalAsset+" birr<br/>"
+                + "the issued items will cost "+costOFissuedItems+" birr<br/>"
+                + "the disptched items cost "+costOFdispatched+" birr<br/>"
+                + " this file is generated using store management software.</body></html>";
                     File HTMLfile = new File("html-report-exported.html");
                     FileWriter file = new FileWriter(HTMLfile);
                     file.write(HTMLData);
@@ -112,11 +118,17 @@ public final class Report implements displayable{
                 }
                     break;
                 case CSV:{
-                    String CSVData=header+"\n"+bodyText+"\n";
-                    for(int i=1,listWithColumen=list.length+1;i<listWithColumen;i++){  
+                    String CSVData=header+"\n"+bodyText+"\nthe table shows property model with its\n" +
+                            "corresponding percentage of its price compared with\n" +
+                            "the total asset of the store. note that the percentage\n" +
+                            "is rounded.";
+                    for(int i=0,listWithColumen=list.length+1;i<listWithColumen;i++){  
                         CSVData+=comparePackagesTable[i][0]+","+comparePackagesTable[i][1]+"\n";
                     }
-                    CSVData+="\nthis file is generated using store management software.";
+                    CSVData+="total asset of the store is "+TotalAsset+" birr\n "
+                            + "the issued items will cost "+costOFissuedItems+" birr\n" 
+                            + "the disptched items cost "+costOFdispatched+" birr\n" 
+                            + "this file is generated using store management software.";
                     File CSVfile = new File("csv-report-exported.csv");
                     FileWriter file = new FileWriter(CSVfile);
                     file.write(CSVData);
