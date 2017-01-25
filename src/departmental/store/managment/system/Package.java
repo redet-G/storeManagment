@@ -114,7 +114,7 @@ public class Package extends GUI implements Comparable,Serializable, displayable
     }
 
     public boolean dispatch(int a){
-        if(amount>a){
+        if(amount>=a){
             dispatched+=a;        
             amount-=a;
            return true;
