@@ -223,7 +223,8 @@ public class Manager {
                         "                  TAMIRESILASSIE TILAHUN(3974/08)\n" +
                         "                  YOHANNES MENGISTU(4034/08)     \n" +
                         "                  YOHANNES NIGUSSIE(4033/08)     \n" +
-                        "                  SAMUEL KASSAW(07486/09)        \n" +
+                        "                  SAMUEL KASSAW(07486/09)        \n\n" +
+                        " fork this on github.com/redet-G/storeManagment  \n" +
                         "       (c) Copyright 2017. All Rights Reserved.";
         if(DEFAULT_UI==userInterface.GRAPHICAL){
             JOptionPane.showMessageDialog(null,MESSAGE,"ABOUT",JOptionPane.INFORMATION_MESSAGE);

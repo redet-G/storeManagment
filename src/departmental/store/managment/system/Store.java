@@ -208,7 +208,7 @@ public class Store implements Serializable, displayable{
               summeryStr +="the store is empty\n";
         }else{
             summeryStr+=String.format("%-4s | %-5s | %-10s | %-9s | %-4s | %-4s | %-4s%n","code", "name ", "discription" , "price" , "amount" , "dispatched", "issued");
-            summeryStr+="-------------------------------------------------------------\n";
+            summeryStr+="-------------------------------------------------------------\r\n";
             for(int i=0;i<top;i++)
                summeryStr+=list[i];
             summeryStr+="-------------------------------------------------------------";
@@ -479,8 +479,8 @@ public class Store implements Serializable, displayable{
                 }
                     break;
                 case TXT:{
-                    String TXTData="list of store package for "+name+"\n"+toString();
-                    TXTData+="\nthis file is generated using store management software.";
+                    String TXTData="list of store package for "+name+"\r\n"+toString();
+                    TXTData+="\r\nthis file is generated using store management software.";
                     File TXTfile = new File("txt-list-exported.txt");
                     FileWriter file = new FileWriter(TXTfile);
                     file.write(TXTData);
