@@ -86,9 +86,11 @@ public class Manager {
                             case 3:
                                 //dispatch pakage after searching it
                                  UoGStore.dispatch();
+				UoGStore.saveStoreTo(FileName);
                                  break;
                             case 4:
                                 UoGStore.issue();
+				UoGStore.saveStoreTo(FileName);
                                 break;
                             case 5:
                                 UoGStore.sort();
