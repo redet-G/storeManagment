@@ -44,4 +44,4 @@ following functions.
 - [x] exporting generated report some file formates(html,csv,text)
 
 # basic class organization
-![basic class organization](/basic class organization.gif?raw=true "basic class organization")
+![basic class organization](basic%20class%20organization.gif?raw=true "basic class organization")
